@@ -28,7 +28,7 @@
               <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
                 <div class="row">
                   <div class="col">
-                      <form class="needs-validation" method="post" action="{{route("marketing.store")}}" novalidate>
+                      <form class="needs-validation" method="post" action="" novalidate>
                         @csrf
                         <div class="add-button">
                           <h2 class="heading mb-4 text-center"><i class="fa fa-mail-bulk"></i> Emailing Marketing</h2>
@@ -69,7 +69,7 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="add-button">
-                      <form class="needs-validation" method="post" action="{{route("marketing.store")}}" novalidate>
+                      <form class="needs-validation" method="post" action="{{url("import")}}" enctype="multipart/form-data" novalidate>
                         @csrf 
                         <div class="form-row">
                           <div class="col">
@@ -89,11 +89,17 @@
                       <h6 class="heading-small text-muted mb-4 mt-4"><i class="ni ni-bold-right"></i> Autre option</h6>
                       <div class="row mt-2">
                         <div class="col-6">
-                          <button type="submit" class="btn btn-primary btn-block"><i class="ni ni-settings-gear-65" aria-hidden="true"></i> vide la liste</button>
+                          <form action=" {{route("marketing.destroy",1)}} " method="POST">
+                            @csrf
+                            @method("DELETE")
+                            <button type="submit" class="btn btn-primary btn-block"><i class="ni ni-settings-gear-65" aria-hidden="true"></i> vide la liste</button>
+                          </form>
                         </div>
                         <div class="col-6">
-                          <button type="submit" class="btn btn-primary btn-block"><i class="ni ni-paper-diploma" aria-hidden="true"></i> Dowland list</button>
-                        </div>
+                          <a href=" {{url("export")}} ">
+                            <button type="submit" class="btn btn-primary btn-block"><i class="ni ni-paper-diploma" aria-hidden="true"></i> Dowland list</button>
+                          </a>
+                       </div>
                       </div>
                     </div>
                   </div>

@@ -20,7 +20,7 @@ class CreateFacturesTable extends Migration
             $table->float("montements");
             $table->float("avance");
             $table->float("reste");
-            $table->unsignedbigInteger("service_id")->nullable();
+            $table->Integer("fourniture_id")->nullable();
             $table->unsignedbigInteger("projet_id")->nullable();
             
             $table->timestamps();

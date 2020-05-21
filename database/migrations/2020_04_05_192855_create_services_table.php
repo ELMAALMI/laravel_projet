@@ -17,8 +17,6 @@ class CreateServicesTable extends Migration
         {
             $table->bigIncrements("service_id");
             $table->string("nom",60);
-            $table->date("date_demande",60);
-            $table->date("date_payment",60);
             $table->timestamps();
         });
     }

@@ -15,7 +15,8 @@ class AddForeignKeyToStagairesTable extends Migration
     {
         Schema::table('stagaires', function (Blueprint $table) 
         {
-            $table->foreign("encadrant_id")->references("cne")->on("employees")->onDelete("cascade");
+            $table->foreignId("employee_id")->constrained();
+            $table->foreignId("job_id")->constrained();
         });
     }
 
@@ -28,7 +29,8 @@ class AddForeignKeyToStagairesTable extends Migration
     {
         Schema::table('stagaires', function (Blueprint $table)
         {
-            $table->dropForeign("stagaires_encadrant_id_foreign");
+            $table->dropForeign("stagaires_employee_id_foreign");
+            $table->dropForeign("stagaires_job_id_foreign");
         });
     }
 }

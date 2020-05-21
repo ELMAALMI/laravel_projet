@@ -15,7 +15,7 @@ class AddForeignKeyToStagaireDocumentsTable extends Migration
     {
         Schema::table('stagaire_documents', function (Blueprint $table)
         {
-            $table->foreign("stagaire_id")->references("cne")->on("stagaires")->onDelete("cascade");
+            $table->foreignId("stagaire_id")->constrained();
         });
     }
 

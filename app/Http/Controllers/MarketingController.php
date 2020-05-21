@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Email;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class MarketingController extends Controller
 {
@@ -16,60 +19,24 @@ class MarketingController extends Controller
         return view("dash.page.marketing");
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+   /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function export() 
     {
-        //
+        return Excel::download(new Email, 'email.xlsx');
+    }
+    
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function import(Request $request) 
+    {
+        Excel::import(new Email, $request->file('list'));
+        
+        return back()->with("status","liste et bien enregistrer");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        dd($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -79,7 +46,12 @@ class MarketingController extends Controller
      */
     public function destroy($id)
     {
-        
+       $emails =  Email::all();
+       foreach($emails as $email)
+       {
+         $email->delete();
+       }
+        return back();
     }
 
 }

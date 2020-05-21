@@ -44,17 +44,27 @@
       <form class="needs-validation" action="{{route('factures.store')}}" method="POST"  enctype="multipart/form-data" novalidate>
             @csrf
             <h6 class="heading-small text-muted mb-4"> <i class="ni ni-bold-right"></i>New Facture</h6>
+            @if ($type=="projet")
             <div class="form-row">
               <div class="col-md-6">
-                <label for="validationCustom01">Nom Projet</label>
+                <label for="Nom">Nom Projet</label>
                 <input type="text" hidden value="{{$projet->projet_id}}" name="projet_id">
-                <input type="text" class="form-control" id="validationCustom02" value="{{$projet->nom_projet}}" disabled>
+                <input type="text" class="form-control" id="Nom" value="{{$projet->nom_projet}}" disabled>
               </div>
               <div class="col-md-6">
                 <label for="validationCustom02">Etat </label>
                 <input type="text" class="form-control" id="validationCustom03" value="{{$projet->etat}}" disabled>
               </div>
             </div>
+            @else
+            <div class="form-row">
+              <div class="col">
+                <label for="Nom">Nom Projet</label>
+                <input type="text" hidden value="{{$fourniture_id}}" name="service">
+                <input type="text" class="form-control" id="Nom" value="{{$fournisseur->nom}}" disabled>
+              </div>
+            </div>
+            @endif
             <div class="add-button">
               <h6 class="heading-small text-muted mb-4"><i class="ni ni-bold-right"></i> Payments detail</h6>
             </div>

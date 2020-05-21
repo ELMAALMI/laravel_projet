@@ -23,7 +23,6 @@ class ClientController extends Controller
 
         //get all clients
         $dataclient           = Client::all();
-        
         // get montementstotal
         $montementstotal      = Facture::where("projet_id","!=","null")->sum("montements");
         // get top client 
@@ -42,6 +41,7 @@ class ClientController extends Controller
         //get data of top projet
         if(count($projetid) == 1 and count($topclientid) == 1)
         {
+            
             $tpoprojet            = Projet::where("projet_id","=",$projetid[0]->projet_id)->get()[0];
             $topclient            = Client::where("client_id","=",$topclientid[0]->client_id)->get()[0];
     
@@ -54,6 +54,7 @@ class ClientController extends Controller
         }
         else
         {
+            
             return view("dash.page.clients",
             ["clients"=>$dataclient,
             "totalclient"=>Client::count(),
@@ -177,7 +178,7 @@ class ClientController extends Controller
             $client = Client::findOrFail($id);
             (new ProjetController())->clientdelet($client->client_id);
             $client->delete();
-            return redirect("/clients")->with('status',"votre supprition et bien fait");
+            return redirect("/clients")->with('status',"votre suppression et bien fait");
         }
         catch(Exception $e)
         {

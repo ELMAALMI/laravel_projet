@@ -15,7 +15,7 @@ class AddForeignKeyToFacture extends Migration
     {
         Schema::table('factures', function (Blueprint $table)
         {
-            $table->foreign("service_id")->references("service_id")->on("services")->onDelete("cascade");
+            $table->foreign("fourniture_id")->references("id")->on("fournitures")->onDelete("cascade");
             $table->foreign("projet_id")->references("projet_id")->on("projets")->onDelete("cascade");
         });
     }

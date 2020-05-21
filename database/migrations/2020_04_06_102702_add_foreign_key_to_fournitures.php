@@ -13,7 +13,9 @@ class AddForeignKeyToFournitures extends Migration
      */
     public function up()
     {
-        Schema::table('fournitures', function (Blueprint $table) {
+        Schema::table('fournitures', function (Blueprint $table)
+         {
+          
             $table->foreign("fournisseur_id")->references("fournisseur_id")->on("fournisseurs")->onDelete('cascade');
             $table->foreign("service_id")->references("service_id")->on("services")->onDelete('cascade');
         });

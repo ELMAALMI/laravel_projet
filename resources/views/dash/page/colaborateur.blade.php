@@ -1,6 +1,7 @@
 @extends('layouts.dash')
 @section('contents')
 <!-- Main content -->
+     <x-alertdelete></x-alertdelete>
 <div class="header bg-primary pb-6">
   <div class="container-fluid">
         <div class="header-body">
@@ -29,7 +30,7 @@
                             <i class="ni ni-single-02"></i>
                           </div>
                         </div>
-                      <span class="h2 font-weight-bold mb-0 ">350,897</span>
+                      <span class="h2 font-weight-bold mb-0 ">{{ $employees->count()}}</span>
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
@@ -50,7 +51,7 @@
                           <i class="ni ni-single-02"></i>
                         </div>
                       </div>
-                      <span class="h2 font-weight-bold mb-0">350,897</span>
+                      <span class="h2 font-weight-bold mb-0">{{ $stagaires->count()}}</span>
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
@@ -90,7 +91,7 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
                          <div class="add-button">
-                           <a href="{{route("colaborateur.create",["type"=>"employee"])}}">
+                           <a href="{{route("employee.create")}}">
                             <button class="btn btn-icon btn-primary" type="button" data-toggle="modal" data-target="#employeeform">
                               <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
                               <span class="btn-inner--text">New employees</span>
@@ -115,26 +116,37 @@
                                     </tr>
                                   </thead>
                                   <tbody class="list">
-                                    @for ($i = 0; $i < 100; $i++)
+
+                                    @forelse ($employees as $employee)
                                     <tr>
-                                    <th data-toggle="tooltip" data-placement="left" title="profile"><a href="{{route('colaborateur.show',[12,"type"=>"employee"])}}">DE987{{$i}}64</a></th>
-                                      <th>BILLAL</th>
-                                      <th>EL MAALMI</th>
-                                      <th>03-03-200</th>
-                                      <th>billal@feen-tech.com</th>
-                                      <th>+2126155464</th>
-                                      <th>29 marjane</th>
-                                      <th>IT</th>
+                                    <th data-toggle="tooltip" data-placement="left" title="profile"><a href="{{ route('employee.show', ['employee' => $employee->id]) }}">{{$employee->cin}}</a></th>
+                                      <th>{{$employee->nom}}</th>
+                                      <th>{{$employee->prenom}}</th>
+                                      <th>{{$employee->date_naissance}}</th>
+                                      <th>{{$employee->email}}</th>
+                                      <th>{{$employee->tele}}</th>
+                                      <th>{{$employee->adresse}}</th>
+                                      <th>{{$employee->job->job_title}}</th>
                                       <td class="table-actions">
-                                        <a href="#!" class="table-action" data-toggle="tooltip" data-original-title="Edit product">
+                                        <a href="{{ route('employee.edit', ['employee' => $employee->id]) }}" class="table-action" data-toggle="tooltip" data-original-title="Edit product">
                                           <i class="fas fa-user-edit"></i>
                                         </a>
-                                        <a href="#!" class="table-action table-action-delete" data-toggle="tooltip" data-original-title="Delete product">
-                                          <i class="fas fa-trash"></i>
-                                        </a>
+
+                                        <form action="{{route("employee.destroy",['employee' => $employee->id])}}" method="POST">
+                                          @method("DELETE")
+                                          @csrf
+                                          <button type="submit" class="table-action table-action-delete text-primary" data-toggle="tooltip" data-original-title="supprimer">
+                                              <i class="fas fa-trash"></i>
+                                          </button>
+                                      </form>
+                                      
+                                        
                                       </td>
                                     </tr> 
-                                    @endfor
+                                    @empty
+                                    <p>no Employyes yet</p>
+                                    @endforelse
+      
                                   </tbody>
                                 </table>
                             </div>
@@ -144,7 +156,7 @@
                 <!---- tab stagaire ---->
                 <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                   <div class="add-button">
-                    <a href="{{route("colaborateur.create",["type"=>"stagaire"])}}">
+                  <a href="{{route('stagaire.create')}}">
                       <button class="btn btn-icon btn-primary" type="button" data-toggle="modal" data-target="#stagaireform">
                         <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
                         <span class="btn-inner--text">New Stagaire</span>
@@ -157,42 +169,45 @@
                       <table class="table align-items-center table-flush" id="tabstagaire">
                         <thead class="thead-light">
                           <tr>
-                            <th><i class="ni ni-badge"></i> CIN</th>
-                            <th><i class="ni ni-badge"></i> sexe</th>
+                            <th><i class="ni ni-badge"></i> CNE</th>
                             <th><i class="ni ni-single-02"></i> NOM</th>
                             <th><i class="ni ni-single-02"></i> PRENOM</th>
+                            <th><i class="ni ni-badge"></i> sexe</th>
                             <th><i class="fa fa-calendar"></i> naissance</th>
-                            <th><i class="ni ni-email-83"></i> Mail</th>
-                            <th><i class="ni ni-mobile-button"></i> Tele </th>
                             <th><i class="ni ni-building"></i> Adresse</th>
-                            <th><i class="ni ni-briefcase-24"></i> Departement</th>
-                            <th><i class="ni ni-tag"></i> ID-encadrant</th>
+                            <th><i class="ni ni-briefcase-24"></i> date debut</th>
+                            <th><i class="ni ni-tag"></i>date fin</th>
                             <th><i class="ni ni-briefcase-24"></i> Action</th>
                           </tr>
                         </thead>
                         <tbody class="list">
-                          @for ($i = 0; $i < 100; $i++)
+                          @forelse ($stagaires as $stagaire)
                           <tr>
-                            <th><a href="">DE987664</a></th>
-                            <th>M</th>
-                            <th>BILLAL</th>
-                            <th>EL MAALMI</th>
-                            <th>03-03-2000</th>
-                            <th>billal@feen-tech.com</th>
-                            <th>+2126155464</th>
-                            <th>29 marjane</th>
-                            <th>IT</th>
-                            <th>235</th>
+                            <th data-toggle="tooltip" data-placement="left" title="profile"><a href="{{ route('stagaire.show', ['stagaire' => $stagaire->id]) }}">{{$stagaire->cne}}</a></th>
+                            <th>{{$stagaire->nom}}</th>
+                            <th>{{$stagaire->prenom}}</th>
+                            <th>{{$stagaire->sexe}}</th>
+                            <th>{{$stagaire->date_naissance}}</th>
+                            <th>{{$stagaire->adresse}}</th>
+                            <th>{{$stagaire->date_debut}}</th>
+                            <th>{{$stagaire->date_fin}}</th>
                             <td class="table-actions">
-                              <a href="#!" class="table-action" data-toggle="tooltip" data-original-title="Edit product">
+                              <a href="{{ route('stagaire.edit', ['stagaire' => $stagaire->id]) }}" class="table-action" data-toggle="tooltip" data-original-title="Edit product">
                                 <i class="fas fa-user-edit"></i>
                               </a>
-                              <a href="#!" class="table-action table-action-delete" data-toggle="tooltip" data-original-title="Delete product">
-                                <i class="fas fa-trash"></i>
-                              </a>
+                              <form action="{{route("stagaire.destroy",['stagaire' => $stagaire->id])}}" method="POST">
+                                @method("DELETE")
+                                @csrf
+                                <button type="submit" class="table-action table-action-delete text-primary" data-toggle="tooltip" data-original-title="supprimer">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
                             </td>
-                          </tr>
-                          @endfor
+                          </tr> 
+                          @empty
+                          <p>no Stagaires yet</p>
+                          @endforelse
+                          
                         </tbody>
                       </table>
                     </div>
@@ -203,5 +218,5 @@
           </div>
       </div>
   </div>    
-                          
+        
 @endsection

@@ -13,16 +13,17 @@ class CreateStagaireDocumentsTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('stagaire_documents', function (Blueprint $table)
         {
-            $table->id("doc_id");
-            $table->string("Cin",50);
-            $table->string("cv",50);
-            $table->string("assurence",50);
-            $table->string("lettre_recommandation",50);
-            $table->string("stagaire_id",50);
+            $table->id();
+            $table->string("cin")->default("imagecin");;
+            $table->string("cv")->default("imagecv");
+            $table->string("assurence")->default("imageassurance");;
+            $table->string("lettre_recommandation")->default("imagelettre_recommandation");;
             $table->timestamps();
         });
+
     }
 
     /**

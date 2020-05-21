@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Facture;
+use App\Produit;
 use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,22 +19,9 @@ class HomeController extends Controller
      */
     public function index()
     { 
-        return view('dash.home');
-    }
-    public function store(Request $request)
-    {
-        
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-  
-        $imageName = "fac".time().'.'.$request->image->extension();  
-   
-        $request->image->move('doc/', $imageName);
-   
-        return back()
-            ->with('success','You have successfully upload image.')
-            ->with('image',$imageName);
-        
+        return view('dash.home',
+        ["montement" =>Facture::where("projet_id","!=","null")->sum("montements"),
+         "users" =>User::count(),
+         "produit" =>Produit::count()]);
     }
 }

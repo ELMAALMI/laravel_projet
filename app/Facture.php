@@ -18,7 +18,7 @@ class Facture extends Model
 
     public function appartient()
     {    
-        return $this->belongsTo('App\Service');
+        return $this->hasOne('App\Fourniture');
     }
 
 

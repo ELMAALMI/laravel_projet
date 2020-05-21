@@ -14,6 +14,7 @@ class CreateFournituresTable extends Migration
     public function up()
     {
         Schema::create('fournitures', function (Blueprint $table) {
+            $table->integer("id")->autoIncrement();
             $table->unsignedbigInteger("fournisseur_id");
             $table->unsignedbigInteger("service_id");
             $table->timestamps();

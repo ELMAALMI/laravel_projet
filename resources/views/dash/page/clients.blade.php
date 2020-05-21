@@ -49,8 +49,7 @@
                         </div>
                       </div>
                     </div>
-                    
-                  </div>
+                </div>
               </div>
             </div>
         </div>
@@ -66,13 +65,13 @@
         </div>
         <div class="card-body px-lg-7">
             <div class="display-2 text-white">
-               {{$topclient["nbprojet"] ?? 0}}
+               {{$topclient["nbprojet"] ?? ''}}
                Projet
             </div>
             <span class=" text-white">by {{ $topclient["client"]->nom ?? ''}}</span>
         </div>
         <div class="card-footer bg-transparent">
-            <a href=" {{route("clients.show",$topclient["client"]->client_id ?? 0)}} ">
+            <a href=" {{route("clients.show",$topclient["client"]->client_id ?? '')}} ">
               <button type="button" class="btn btn-primary mb-3">Plus</button>
             </a>
         </div>
@@ -84,11 +83,11 @@
             <h4 class="text-uppercase ls-1 text-white py-3 mb-0">Top Projet</h4>
         </div>
         <div class="card-body px-lg-7">
-            <div class="display-2 text-white"> {{$topprojet["montements"] ?? 0}} Dh</div>
+            <div class="display-2 text-white"> {{$topprojet["montements"] ?? ''}} Dh</div>
             <span class=" text-white">by {{$topprojet["projet"]->nom_projet ?? ''}} </span>
         </div>
         <div class="card-footer bg-transparent">
-          <a href=" {{route("projet.show",$topprojet["projet"]->projet_id ?? 0)}} ">
+          <a href=" {{route("projet.show",$topprojet["projet"]->projet_id ?? '')}} ">
             <button type="button" class="btn btn-primary mb-3">Plus</button>
           </a>
         </div>

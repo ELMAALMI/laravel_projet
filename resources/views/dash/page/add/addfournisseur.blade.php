@@ -70,37 +70,41 @@
                     </div>
                   </div>
                   <div class="form-row">
-                    <div class="col-md-6">
+                    <div class="col">
                       <label for="Adresse">Adresse</label>
                       <input class="form-control" type="text" id="Adresse" placeholder="29 Marjane" name="adresse" required>
                       <div class="invalid-feedback">
                         Adresse et required
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <label for="Service">Type de Service</label>
-                      <input class="form-control" type="text" id="Service" placeholder="FINANCE" name="service" required>
-                      <div class="invalid-feedback">
-                        Type de Service
-                      </div>
-                    </div>
+                    
                   </div>
                   <div class="add-button">
                     <div class="form-row">
-                      <div class="row">
-                        <div class="col">
-                          <div class="input-group-btn">
-                            <span class="fileUpload btn btn-success">
-                                <span class="upl" id="upload">Logo </span>
-                                <input type="file" class="upload up" id="up" onchange="readURL(this,'#logo');" name="logo" required/>
-                              </span>
-                          </div>
-                        </div>
-                        <div class="col">            
-                          <img width="46px" id="logo" src="{{ asset('img/image.png') }}" alt="your image" />
+                      <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-2">
+                              <div class="input-group-btn">
+                                <span class="fileUpload btn btn-success">
+                                    <span class="upl" id="upload">Logo </span>
+                                    <input type="file" class="upload up" id="up" onchange="readURL(this,'#logo');" name="logo" required/>
+                                  </span>
+                              </div>
+                            </div>
+                            <div class="col">            
+                              <img width="46px" id="logo" src="{{ asset('img/image.png') }}" alt="your image" />
+                            </div>
                         </div>
                       </div>
+                      <div class="col-md-6">
+                        <label for="payment"> Type Service</label>
+                        <select class="custom-select" id="payment" name="service_id" required>
+                          @foreach ($services as $service)
+                            <option  value=" {{$service->service_id}} "> {{$service->nom}} </option>
+                          @endforeach
+                        </select>
                     </div>
+                   </div>
                   </div>
                   <div class="add-button">
                       <h6 class="heading-small text-muted mb-4"><i class="ni ni-bold-right"></i> Payments detail</h6>
@@ -144,32 +148,6 @@
                       <div class="invalid-feedback">
                         Service et required
                       </div>
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col-md-6">
-                      <label for="Avance">Avance</label>
-                      <input class="form-control datepicker @error('date_demande') is-invalid-msg @enderror" id="date_demande" name="date_demande" placeholder="Select date" value="{{old("date_demande")}}" type="text" required>
-                      <div class="invalid-feedback">
-                        date et required
-                      </div>
-                      @error('date_demande')
-                        <span class="invalid-msg" role="alert">
-                          <strong>{{ $message }}</strong>
-                        </span> 
-                      @enderror
-                    </div>
-                    <div class="col-md-6">
-                      <label for="Reste">Reste</label>
-                      <input class="form-control datepicker @error('date_demande') is-invalid-msg @enderror" id="date_demande" name="date_demande" placeholder="Select date" value="{{old("date_demande")}}" type="text" required>
-                      <div class="invalid-feedback">
-                        date et required
-                      </div>
-                      @error('date_demande')
-                        <span class="invalid-msg" role="alert">
-                          <strong>{{ $message }}</strong>
-                        </span> 
-                      @enderror
                     </div>
                   </div>
                   <div class="form-row">

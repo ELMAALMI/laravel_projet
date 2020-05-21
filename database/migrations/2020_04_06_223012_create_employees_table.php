@@ -14,17 +14,16 @@ class CreateEmployeesTable extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->string("cne",10)->primary();
+            $table->id();
+            $table->string("cin",6)->unique();
             $table->string("nom",50);
             $table->string("prenom",50);
-            $table->date("date_naissance");
+            $table->string("date_naissance");
             $table->float("salaire");
-            $table->string("tele",14);
+            $table->string("tele");
             $table->string("sexe",30);
             $table->string("email",50);
-            $table->string("adresse",50);
-            $table->unsignedBigInteger("job_id");
-            $table->unsignedBigInteger("compte_id");
+            $table->string("adresse");
             $table->timestamps();
         });
     }

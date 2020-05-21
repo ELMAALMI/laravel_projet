@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
-    
 
      //relation avec table emlpoyees et users
     public function employee(){
@@ -26,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email','password',
+        'name', 'email', 'password',
     ];
 
     /**

@@ -20,7 +20,6 @@ class CreateFournisseursTable extends Migration
             $table->string("email",60);
             $table->string("adresse",80);
             $table->string("logo",40);
-            $table->string("service",40);
             $table->timestamps();
         });
     }

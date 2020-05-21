@@ -1,43 +1,57 @@
-
 <?php
 
-
-
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    protected $primaryKey = 'employee_id';
-    //relation avec table stagaires et employees
-    public function stagaires()
-    {
+    //
+    protected $fillable = ['cin' , 'nom' , 'prenom' , 'sexe' ,'adresse' , 'email' ,'tele' ,'date_naissance' , 'salaire' , 'job_id'];
+
+    public function user(){
+        return $this->hasOne('App\User');
+    }
+
+    public function stagaire(){
         return $this->hasMany('App\Stagaire');
     }
 
-    //realtion avec table Produit et employee  many to many 
-     //(les donnes sont inseré sur table_association emloyee_produit )
-    public function produits()
-    {
-        return $this->belongsToMany('App\Produit');
-    }
-//relation avec table rapports et employees
-    public function rediger()
-    {
-        return $this->hasMany('App\Rapport');
-    }
-//relation avec table jobs et employees
-    public function avoirjob()
-    {
+    public function job(){
+
         return $this->belongsTo('App\Job');
     }
-//relation avec table users et employees
-    public function hasaccount()
-    {
-        return $this->HasOne('App\User');
+
+    public function employeedoc(){
+
+        return $this->hasOne('App\EmployeeDocs');
     }
 
+    public function rapports(){
+        return $this->morphMany('App\Rapport' , 'rapportable');
+    }
+  
+    public static function boot(){
+        parent::boot();
     
+        static::deleting(function(Employee $employee){
+            $employee->user()->delete();
+            $employee->stagaire()->delete();
+            // $rapport->documment()->delete();
+        });
 
-    
+
+        static::updated(function(Employee $employee){
+            
+            $id = $employee->user->id;
+            
+            $user = User::findOrFail($id);
+            
+            $user->email = $employee->email ;
+            
+            $user->save();
+
+        });
+
+        }
 }

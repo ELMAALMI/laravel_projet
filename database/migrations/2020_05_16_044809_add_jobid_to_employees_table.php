@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBilansTable extends Migration
+class AddJobidToEmployeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateBilansTable extends Migration
      */
     public function up()
     {
-        Schema::create('bilans', function (Blueprint $table) {
-            $table->bigIncrements("bilan_id");
-            $table->string("nom");
-            $table->float("montant");
-            $table->timestamps();
+        Schema::table('employees', function (Blueprint $table) {
+            //
+            $table->foreignId("job_id")->constrained();
         });
     }
 
@@ -28,6 +26,9 @@ class CreateBilansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bilans');
+        Schema::table('employees', function (Blueprint $table) {
+            //
+            $table->dropForeign('employees_job_id_foreign');
+        });
     }
 }

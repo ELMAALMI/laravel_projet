@@ -15,12 +15,5 @@ class Service extends Model
         return $this->belongsToMany('App\Fournisseur');
     }
 
-    //relation avec table service et factures
-    public function concerne()
-    {
-        return $this->hasMany('App\Facture');
-    }
-
-
-
+  
 }

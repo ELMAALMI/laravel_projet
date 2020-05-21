@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Facture;
 use App\Facture_document;
+use App\Fournisseur;
+use App\Fourniture;
 use App\Projet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -28,8 +30,25 @@ class FactureController extends Controller
      */
     public function create()
     {
-        return view("dash.page.add.addfacture",
-        ["projet"=>Projet::findOrFail($_GET['id'])]);    
+        if(isset($_GET['type']) and $_GET['type']=="fournisseur")
+        {
+            $fourniteur_id = null;
+            $fournisseur = Fournisseur::findOrFail($_GET['id']);
+            $fourniteur  = Fourniture::where("fournisseur_id","=",$fournisseur->fournisseur_id)->get();
+            if(count($fourniteur)>0)
+            {
+                $fourniteur_id     = $fourniteur[0]->id;
+    
+            }
+            return view("dash.page.add.addfacture",
+            ["fournisseur"=>$fournisseur,"fourniture_id"=>$fourniteur_id,"type"=>$_GET["type"]]);  
+        }
+        else
+        {
+            return view("dash.page.add.addfacture",
+        ["projet"=>Projet::findOrFail($_GET['id']),"type"=>"projet"]);  
+        }
+          
     }
 
     /**
@@ -40,17 +59,20 @@ class FactureController extends Controller
      */
     public function store(Request $request)
     {
-        $facture =  $this->validation($request); 
-        if($request->has("fournisseur"))
-        {
-            $facture['ser'];
-        }
+        $this->validation($request); 
         $facture = new Facture();
         $facture->type_payment  =  $request->type_payment;
         $facture->montements    =  $request->montement;
         $facture->avance        =  $request->avance;
         $facture->reste         =  $request->montement - $request->avance;
-        $facture->projet_id     =  $request->projet_id;
+        if($request->has("service_id"))
+        {
+            $facture->fourniture_id     =  $request->service_id;
+        }
+        else
+        {
+            $facture->projet_id     =  $request->projet_id;
+        }
         $facture->save();
         
         foreach ($request->file("docs") as $doc)
@@ -158,7 +180,6 @@ class FactureController extends Controller
             "type_payment"  => "required" ,
             "montement"     => 'required|numeric|gte:avance',
             "avance"        => "required" ,
-            "reste"         => "required"
         ])->validate();
     }
 

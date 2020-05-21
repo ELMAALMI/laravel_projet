@@ -1,10 +1,11 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBilanTabsTable extends Migration
+class CreateRapportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +14,13 @@ class CreateBilanTabsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bilan_tabs', function (Blueprint $table) {
-            $table->unsignedbigInteger("bilan_id");
-            $table->unsignedbigInteger("facture_id");
+        Schema::create('rapports', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->string('path');
+            $table->morphs('rapportable');
             $table->timestamps();
+            
         });
     }
 
@@ -27,6 +31,6 @@ class CreateBilanTabsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bilan_tabs');
+        Schema::dropIfExists('rapports');
     }
 }

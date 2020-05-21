@@ -15,7 +15,7 @@ class ServiceFournisseurController extends Controller
      */
     public function index()
     {
-        //
+        return redirect("/fournisseur");
     }
 
     /**
@@ -25,7 +25,7 @@ class ServiceFournisseurController extends Controller
      */
     public function create()
     {
-        //
+        return view("dash.page.add.addfournisseurservice");
     }
 
     /**
@@ -36,9 +36,11 @@ class ServiceFournisseurController extends Controller
      */
     public function store(Request $request)
     {
-        $service = $this->validation($request);
-        Service::create($service);
-        (new FournisseurController())->store($request);
+       
+        $service = new Service();
+        $service->nom = $request->service;
+        $service->save();
+        return redirect("/fournisseur")->with("status","Service et bien enre");
     }
 
     /**
@@ -49,7 +51,8 @@ class ServiceFournisseurController extends Controller
      */
     public function show($id)
     {
-        //
+        return redirect("/fournisseur");
+        
     }
 
     /**
@@ -60,7 +63,8 @@ class ServiceFournisseurController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("dash.page.edit.editfournisseurservice",
+                    ["service"=>Service::findOrFail($id)]);
     }
 
     /**
@@ -72,7 +76,10 @@ class ServiceFournisseurController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $service = Service::findOrFail($id);
+        $service->nom = $request->service;
+        $service->update();
+        return redirect("/fournisseur")->with("status","Service et bien modifier");
     }
 
     /**
@@ -83,22 +90,7 @@ class ServiceFournisseurController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Service::findOrFail($id)->delete();
+        return redirect("/fournisseur")->with("status","Service et bien supprimer");
     }
-
-
-      /**
-     * validation data facture 
-     */
-    public function validation(Request $request)
-    {
-        return  Validator::make($request->all(),
-            [
-                "fournisseur_id"   => "required",
-                "nom"              => "required",
-                "date_demande"     => 'required|numeric|gte:avance',
-                "date_payment"     => "required",
-            ])->validate();
-    }
-
 }

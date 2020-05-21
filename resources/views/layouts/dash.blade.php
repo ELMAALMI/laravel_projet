@@ -74,7 +74,7 @@
             <li class="nav-item">
             <a class="nav-link {{ Request::segment(1) === 'fournisseur' ? 'active' : null }}" href="{{ url('/fournisseur')}}">
                 <i class="ni ni-collection"></i>
-                <span class="nav-link-text">Fournissurs</span>
+                <span class="nav-link-text">Fournisseur</span>
               </a>
             </li>
             <li class="nav-item">
@@ -89,12 +89,7 @@
                 <span class="nav-link-text">Marketing digital</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link {{ Request::segment(1) === 'bilan' ? 'active' : null }}" href="{{ url('/bilan')}}">
-                <i class="ni ni-bullet-list-67"></i>
-                <span class="nav-link-text">Bilan</span>
-              </a>
-            </li>
+            
           </ul>
         </div>
       </div>
@@ -218,6 +213,7 @@
 <script src="{{ asset('vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
 <!-- Optional JS -->
 <script src="{{ asset('vendor/chart.js/dist/Chart.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="{{ asset('vendor/chart.js/dist/Chart.extension.js') }}"></script>
 <!-- notify -->
 <script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
@@ -230,6 +226,13 @@
 
 <script src="{{ asset('js/argon.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
+<script>
+  var urlproduit = " {{url('/getdataproduit')}} " ;
+  var urlchiffre = " {{url('/getdatachiffre')}} " ;
+  var urlrevenu  = " {{url('/getdatarevenu')}} "  ;
+  var urlservice = " {{url('/getdatservice')}} "  ;
+</script>
+<script src="{{ asset('js/chartjs.js') }}"></script>
 </body>
 
 </html>

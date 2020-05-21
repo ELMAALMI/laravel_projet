@@ -11,18 +11,23 @@ class CreateStagairesTable extends Migration
      *
      * @return void
      */
+    
     public function up()
     {
         Schema::create('stagaires', function (Blueprint $table) {
-            $table->string("cne",10)->primary();
+            $table->id();
+            $table->string("cne",6)->unique();
             $table->string("nom",50);
             $table->string("prenom",50);
             $table->string("sexe",30);
-            $table->date("date_naissance");
+            $table->string("date_naissance");
+            $table->string("adresse");
+            $table->string("tele");
             $table->string("nom_ecole",50);
-            $table->date("date_debut");
-            $table->date("date_fin");
-            $table->string("encadrant_id",10);
+            $table->string("nom_projet",50);
+            $table->string("email",50)->unique();
+            $table->string("date_debut");
+            $table->string("date_fin");
             $table->timestamps();
         });
     }
